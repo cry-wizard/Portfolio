@@ -1,103 +1,229 @@
+"use client";
+
+import React, { useRef } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useMotionTemplate,
+} from "motion/react";
 import Image from "next/image";
+import landingImg from "../../public/img5.jpg";
+import { Navigation } from "@/components/ui/Navigation";
+import About from "@/components/About";
+import Project from "@/components/Project";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import Skills from "@/components/Skills";
 
-export default function Home() {
+// CometCard component (unchanged)
+export const CometCard = ({
+  rotateDepth = 12.5,
+  translateDepth = 10,
+  className = "",
+  children,
+}) => {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x, { stiffness: 100, damping: 15 });
+  const mouseYSpring = useSpring(y, { stiffness: 100, damping: 15 });
+
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    [`-${rotateDepth}deg`, `${rotateDepth}deg`]
+  );
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    [`${rotateDepth}deg`, `-${rotateDepth}deg`]
+  );
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], [0, 100]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], [0, 100]);
+  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.8) 10%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0) 80%)`;
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className={`perspective-[1000px] ${className}`}>
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          boxShadow:
+            "rgba(0,0,0,0.05) 0px 25px 60px, rgba(0,0,0,0.15) 0px 15px 20px, rgba(0,0,0,0.25) 0px 5px 8px",
+        }}
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: "spring", stiffness: 350, damping: 22 }}
+        className="relative rounded-[20px] transition-transform duration-200 bg-black border-[3px] border-gray-800"
+      >
+        {children}
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-50 rounded-[20px] mix-blend-overlay"
+          style={{ background: glareBackground, opacity: 0.8 }}
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </motion.div>
     </div>
   );
-}
+};
+
+// Page component
+const Page = () => {
+  const projectRef = useRef(null);
+  const contactRef = useRef(null);
+
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#FFF7B3] text-black font-sans">
+      <Navigation />
+
+      <section className="px-4 sm:px-6 py-14 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          {/* Left Side */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <div className="border-2 border-black bg-white px-3 py-1 text-xs font-bold rounded-sm">
+                LEVEL 1
+              </div>
+              <span className="text-gray-600 uppercase tracking-widest text-xs font-mono">
+                Player Profile
+              </span>
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl font-black leading-tight">
+              Hi, I&apos;m <span className="text-orange-500">Siddhart Raj</span>{" "}
+              —<span className="text-yellow-400"> Dev</span> &{" "}
+              <span className="text-[#EA476D]">Creator</span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-gray-800 leading-relaxed max-w-md">
+  I build robust backend systems, dynamic web applications, and mobile apps — focusing on scalable APIs, clean UI, and seamless user experiences.
+</p>
+
+
+            <div className="flex flex-wrap gap-4 pt-4">
+              <button
+                onClick={() =>
+                  projectRef.current?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="bg-[#FF5F5F] hover:bg-[#ff3f3f] text-white font-bold py-3 px-6 border-2 border-black rounded-lg shadow-md hover:-translate-y-1 transition-transform"
+              >
+                View Projects →
+              </button>
+              <button
+                onClick={() =>
+                  contactRef.current?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="bg-white hover:bg-gray-100 text-black font-bold py-3 px-6 border-2 border-black rounded-lg shadow-md hover:-translate-y-1 transition-transform"
+              >
+                Hire Me
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-5">
+              {[
+                "Node.js",
+                "MongoDB",
+                "REST APIs",
+                "Expo",
+                "TypeScript",
+                "Docker",
+              ].map((skill) => (
+                <div
+                  key={skill}
+                  className="border-2 border-black px-4 py-2 rounded-md font-semibold text-xs bg-[#FFF0A8] hover:bg-white transition"
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-8">
+              {[
+                { label: "Top Project", value: "Social Media App" },
+                { label: "Current Goal", value: "Master JetCompose" },
+                { label: "Status", value: "Open to Internships" },
+                { label: "Focus Area", value: "Full-Stack Development" },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="border-2 border-black bg-white p-4 rounded-xl text-sm shadow hover:-translate-y-1 transition-transform"
+                >
+                  <div className="font-bold text-gray-600">{item.label}</div>
+                  <div className="text-gray-900 font-semibold">
+                    {item.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side */}
+          <div className="flex justify-center h-[80%] lg:justify-end mt-10 lg:mt-0">
+            <CometCard className="max-w-xs sm:max-w-sm lg:max-w-md">
+              <div className="relative rounded-[20px] border-r-8 border-b-4 border-t-2 border-gray-900 p-6 shadow-lg bg-[#A1806D]">
+                <div className="absolute left-3 bg-white border-[2px] border-black px-4 py-1 pt-1 font-bold text-xs rounded-md shadow">
+                  RANK S
+                </div>
+                <div className="p-8 border-4 rounded-3xl border-[#382726] ">
+                  <div className="bg-gray-900 rounded-lg overflow-hidden h-72 sm:h-80 flex items-center justify-center mb-4">
+                    <Image
+                      src={landingImg}
+                      alt="Character"
+                      className="w-full h-full object-cover bg-[#A1806D]"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-center gap-4">
+                  <div className="border-2 border-black bg-[#E5486D] px-4 py-2 font-bold text-xs rounded-md shadow">
+                    HP 100
+                  </div>
+                  <div className="border-2 border-black bg-[#1288AC] px-4 py-2 font-bold text-xs rounded-md shadow">
+                    XP 59%
+                  </div>
+                </div>
+              </div>
+            </CometCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Rest of the Sections */}
+      <div id="about">
+        <About />
+      </div>
+
+      <div id="skills">
+        <Skills />
+      </div>
+
+      <div id="projects" ref={projectRef}>
+        <Project />
+      </div>
+
+      <div id="contact" ref={contactRef}>
+        <Contact />
+      </div>
+
+      <Footer />
+    </main>
+  );
+};
+
+export default Page;
