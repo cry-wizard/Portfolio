@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import ProfilrImge from "../../public/Profile.jpg"
+import ProfileImage from "../../public/Profile.jpg";
 import Image from "next/image";
 
 // ==========================
@@ -41,7 +41,13 @@ const FadeInOnScroll = ({ children, delay = 0, className = "" }) => {
 // ==========================
 // 2️⃣ Animated HP / XP Counter
 // ==========================
-const AnimatedStatBox = ({ label, targetValue, duration = 2000, suffix = "", className }) => {
+const AnimatedStatBox = ({
+  label,
+  targetValue,
+  duration = 2000,
+  suffix = "",
+  className,
+}) => {
   const [currentValue, setCurrentValue] = useState(0);
   const ref = useRef(null);
   const animationStarted = useRef(false);
@@ -188,9 +194,11 @@ const Contact = () => {
                 <div className="flex gap-3 mb-3">
                   <div className="w-16 h-16 border-2 border-black overflow-hidden flex items-center justify-center">
                     <Image
-                      src={ProfilrImge}
+                      src={ProfileImage}
                       alt="Avatar"
-                      className="w-full h-full object-cover"
+                      width={64}
+                      height={64}
+                      className="object-cover"
                     />
                   </div>
                   <div>
@@ -199,7 +207,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <p className="text-sm text-gray-700 mb-4">
-                  Currently pursuing B.Tech in Computer Science and Engineering. I'm passionate
+                  Currently pursuing B.Tech in Computer Science and Engineering. I&apos;m passionate
                   about coding, learning new technologies, and building meaningful projects.
                 </p>
                 <div className="flex gap-2">

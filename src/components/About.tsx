@@ -9,15 +9,14 @@ const About = () => {
   return (
     <section className="relative bg-[#135F40] min-h-screen w-full text-white px-6 sm:px-10 py-16 rounded-t-[2rem] overflow-hidden">
       {/* Header */}
-     <div className="text-center mb-14">
-  <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-3 glow-white">
-    ABOUT • PLAYER
-  </h2>
-  <p className="text-base sm:text-lg text-[#C6F6D5] font-medium">
-    🎮 Game-inspired developer • Motion-first design • Retro arcade polish
-  </p>
-</div>
-
+      <div className="text-center mb-14">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-3 glow-white">
+          ABOUT • PLAYER
+        </h2>
+        <p className="text-base sm:text-lg text-[#C6F6D5] font-medium">
+          🎮 Game-inspired developer • Motion-first design • Retro arcade polish
+        </p>
+      </div>
 
       {/* Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
@@ -100,19 +99,21 @@ const About = () => {
           <motion.div
             whileHover={{ rotate: -3, scale: 0.98 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="bg-[#EEECE8] rounded-2xl overflow-hidden flex items-center justify-center p-6 w-full"
+            className="bg-[#EEECE8] rounded-2xl overflow-hidden flex items-center justify-center p-6 w-full relative h-[400px]"
           >
             <Image
               src={robotImg}
               alt="Robot Character"
-              className="object-contain max-h-[400px]"
+              fill // fill available space of relative parent
+              style={{ objectFit: "contain" }}
+              priority // optional, if you want to preload
             />
           </motion.div>
 
           {/* Status */}
           <div className="mt-5">
             <div className="bg-[#00E6BE] text-black font-bold text-sm px-5 py-2 rounded-full border-2 border-black shadow-[3px_3px_0_#000]">
-             ⚪ AVAILABLE FOR WORK
+              ⚪ AVAILABLE FOR WORK
             </div>
           </div>
         </motion.div>

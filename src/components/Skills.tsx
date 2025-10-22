@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const skillTabs = [
   { key: "foundations", label: "Foundations", color: "bg-yellow-400" },
@@ -42,34 +45,68 @@ const skillContent = {
   },
 };
 
+const tabButtonVariants = {
+  initial: { scale: 1 },
+  hover: { scale: 1.05, boxShadow: "0 0 8px rgba(0,0,0,0.2)" },
+  active: { scale: 1.1, boxShadow: "0 0 12px rgba(0,0,0,0.4)" },
+};
+
+const contentVariants = {
+  initial: { opacity: 0, x: 20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -20 },
+};
+
+const progressBarVariants = {
+  initial: { width: 0 },
+  animate: (width) => ({
+    width,
+    transition: { duration: 1.2, ease: "easeInOut" },
+  }),
+};
+
 const Skills = () => {
   const [activeTab, setActiveTab] = useState("foundations");
 
-  const { title, equipment, achievements, level, maxLevel } =
-    skillContent[activeTab];
+  const { title, equipment, achievements } = skillContent[activeTab];
 
   return (
     <section className="bg-[#135F40] text-white min-h-screen px-6 sm:px-12 py-12 flex flex-col lg:flex-row gap-8">
       {/* Left Tabs */}
       <div className="lg:w-1/5 flex flex-col gap-4">
-        {skillTabs.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`py-4 px-4 text-left rounded-lg font-semibold transition-all border
-              ${
-                activeTab === tab.key
-                  ? `${tab.color} text-black scale-105 shadow-lg`
-                  : "bg-[#0F4A34] hover:bg-yellow-300 hover:text-black"
-              }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {skillTabs.map((tab) => {
+          const isActive = activeTab === tab.key;
+          return (
+            <motion.button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              initial="initial"
+              whileHover="hover"
+              animate={isActive ? "active" : "initial"}
+              variants={tabButtonVariants}
+              className={`py-4 px-4 text-left rounded-lg font-semibold border
+                ${
+                  isActive
+                    ? `${tab.color} text-black`
+                    : "bg-[#0F4A34] hover:bg-yellow-300 hover:text-black"
+                } transition-colors duration-300`}
+            >
+              {tab.label}
+            </motion.button>
+          );
+        })}
       </div>
 
       {/* Main Panel */}
-      <div className="lg:w-3/5 bg-[#0F4A34] p-6 rounded-xl shadow-lg">
+      <motion.div
+        key={activeTab}
+        className="lg:w-3/5 bg-[#0F4A34] p-6 rounded-xl shadow-lg min-h-[320px]"
+        variants={contentVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.4 }}
+      >
         <h2 className="text-4xl font-bold mb-6 text-yellow-300">{title}</h2>
 
         {/* Equipment */}
@@ -86,7 +123,9 @@ const Skills = () => {
 
         {/* Achievements */}
         <div>
-          <h3 className="text-2xl mb-4 text-white font-bold">Achievements Unlocked</h3>
+          <h3 className="text-2xl mb-4 text-white font-bold">
+            Achievements Unlocked
+          </h3>
           <ul className="space-y-2">
             {achievements.map((ach, idx) => (
               <li
@@ -98,7 +137,7 @@ const Skills = () => {
             ))}
           </ul>
         </div>
-      </div>
+      </motion.div>
 
       {/* Right Progress Panel */}
       <div className="lg:w-1/5 bg-[#0F4A34] p-6 rounded-xl shadow-lg">
@@ -107,16 +146,21 @@ const Skills = () => {
           const levelData = skillContent[tab.key];
           const percent = (levelData.level / levelData.maxLevel) * 100;
           return (
-            <div key={tab.key} className="mb-4">
-              <div className="flex justify-between mb-1">
+            <div key={tab.key} className="mb-6">
+              <div className="flex justify-between mb-1 font-semibold text-white">
                 <span>{tab.label}</span>
-                <span className="text-sm">{levelData.level} / {levelData.maxLevel}</span>
+                <span className="text-sm">
+                  {levelData.level} / {levelData.maxLevel}
+                </span>
               </div>
-              <div className="w-full h-3 bg-[#194D39] rounded-full">
-                <div
-                  className={`h-full rounded-full ${tab.color}`}
-                  style={{ width: `${percent}%` }}
-                ></div>
+              <div className="w-full h-4 bg-[#194D39] rounded-full overflow-hidden">
+                <motion.div
+                  className={`${tab.color} h-full rounded-full shadow-lg`}
+                  initial="initial"
+                  animate="animate"
+                  variants={progressBarVariants}
+                  custom={`${percent}%`}
+                />
               </div>
             </div>
           );
