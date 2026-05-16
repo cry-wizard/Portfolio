@@ -9,18 +9,18 @@ const experiences = [
     role: "Frontend Developer Intern",
     company: "CertED Technologies",
     duration: "2 Months",
-    description: "Developed responsive web interfaces using React and Next.js. Improved page load speed by 20% through code splitting and asset optimization. Collaborated with the UX team to implement modern design systems.",
-    tech: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
-    color: "bg-[#EA476D]", // Pink
+    description: "Assisted in building full-stack applications. Created reusable UI components and integrated RESTful APIs. Participated in daily stand-ups and agile workflows.",
+    tech: ["JavaScript", "HTML/CSS", "Node.js", "API Integration"],
+    color: "bg-[#00E6BE]", // Pink
   },
   {
     id: 2,
     role: "Web Development Intern",
     company: "Centennial Infotech",
     duration: "3 Months",
-    description: "Assisted in building full-stack applications. Created reusable UI components and integrated RESTful APIs. Participated in daily stand-ups and agile workflows.",
-    tech: ["JavaScript", "HTML/CSS", "Node.js", "API Integration"],
-    color: "bg-[#00E6BE]", // Mint
+    description: "Developed responsive web interfaces using React and Next.js. Improved page load speed by 20% through code splitting and asset optimization. Collaborated with the UX team to implement modern design systems.",
+    tech: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
+    color: "bg-[#EA476D]", // Mint
   },
 ];
 
@@ -59,7 +59,7 @@ const ExperienceCard = ({ exp, index }) => {
         </div>
         <h3 className="text-2xl font-black text-white drop-shadow-md">{exp.company}</h3>
       </div>
-      
+
       <div className="md:w-3/4">
         <h4 className="text-2xl md:text-3xl font-black text-[#FFE600] mb-3 drop-shadow-md">
           {exp.role}
@@ -85,7 +85,7 @@ const ExperienceCard = ({ exp, index }) => {
 
 export default function Experience() {
   const containerRef = useRef(null);
-  
+
   const { scrollYProgress: trackProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
@@ -95,14 +95,6 @@ export default function Experience() {
 
   return (
     <section ref={containerRef} className="relative py-32 px-4 sm:px-6 w-full overflow-hidden bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB]" id="experience">
-      
-      {/* --- TOP HIGH QUALITY WAVE DIVIDER --- */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180 z-0">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-[80px] sm:h-[150px] block">
-          <path fill="#FFF7B3" fillOpacity="1" d="M0,256L48,229.3C96,203,192,149,288,149.3C384,149,480,203,576,213.3C672,224,768,192,864,181.3C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-          <path fill="#FFEA8C" fillOpacity="0.5" d="M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,224C672,245,768,235,864,208C960,181,1056,139,1152,133.3C1248,128,1344,160,1392,176L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-        </svg>
-      </div>
 
       {/* --- CONTINUOUS LIVING OCEAN ELEMENTS --- */}
       <motion.div {...floatingAnimation(6, -30, 20, 5)} className="absolute top-[15%] left-[8%] text-7xl opacity-90 z-0 drop-shadow-xl select-none">
@@ -145,9 +137,9 @@ export default function Experience() {
         <div className="relative pt-10 pb-10">
           {/* Background Track */}
           <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-2 bg-white/20 -translate-x-1/2 rounded-full z-0"></div>
-          
+
           {/* Animated Fill Track */}
-          <motion.div 
+          <motion.div
             style={{ height: trackHeight }}
             className="absolute left-6 md:left-1/2 top-0 w-2 bg-gradient-to-b from-[#FFE600] to-[#FF9D00] shadow-[0_0_15px_#FFE600] -translate-x-1/2 rounded-full z-0 origin-top"
           ></motion.div>
@@ -156,9 +148,9 @@ export default function Experience() {
           <div className="space-y-24">
             {experiences.map((exp, index) => (
               <div key={exp.id} className="relative z-10 w-full flex flex-col md:flex-row items-center">
-                
+
                 {/* Center Node / Compass Marker */}
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true, margin: "-100px" }}
@@ -167,7 +159,7 @@ export default function Experience() {
                 >
                   🧭
                 </motion.div>
-                 
+
                 <div className={`w-full md:w-1/2 ${index % 2 === 0 ? "pl-20 md:pl-0 md:pr-20 md:ml-0" : "pl-20 md:pl-20 md:ml-auto"}`}>
                   <ExperienceCard exp={exp} index={index} />
                 </div>
@@ -176,14 +168,6 @@ export default function Experience() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* --- BOTTOM HIGH QUALITY WAVE DIVIDER --- */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-[80px] sm:h-[150px] block">
-          <path fill="#0F172A" fillOpacity="1" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,202.7C960,224,1056,224,1152,208C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          <path fill="#1E293B" fillOpacity="0.5" d="M0,256L48,229.3C96,203,192,149,288,149.3C384,149,480,203,576,213.3C672,224,768,192,864,181.3C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
       </div>
 
     </section>

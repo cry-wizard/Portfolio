@@ -5,28 +5,28 @@ import { motion } from "framer-motion";
 
 const skillsData = [
   {
-    title: "FRONTEND ISLAND",
+    title: "FRONTEND",
     icon: "🏝️",
     skills: ["React", "Next.js", "Tailwind", "TypeScript", "Redux", "A11Y"],
     color: "from-[#FF416C] to-[#FF4B2B]", // Vibrant Sunset
     shadow: "shadow-[0_0_30px_rgba(255,65,108,0.4)]",
   },
   {
-    title: "BACKEND TRENCH",
+    title: "BACKEND",
     icon: "🐙",
     skills: ["Node.js", "Express", "Socket.io", "MongoDB", "REST APIs", "GraphQL"],
     color: "from-[#4776E6] to-[#8E54E9]", // Deep Purple/Blue
     shadow: "shadow-[0_0_30px_rgba(71,118,230,0.4)]",
   },
   {
-    title: "CLOUD SKYPIEA",
+    title: "CLOUD",
     icon: "☁️",
     skills: ["AWS", "Linux", "Docker", "CI/CD", "Git", "Nginx"],
     color: "from-[#00B4DB] to-[#0083B0]", // Sky Blue
     shadow: "shadow-[0_0_30px_rgba(0,180,219,0.4)]",
   },
   {
-    title: "UI/UX TREASURE",
+    title: "UI/UX ",
     icon: "💎",
     skills: ["Framer Motion", "GSAP", "Figma", "Design Systems", "UI/UX"],
     color: "from-[#FDFC47] to-[#24FE41]", // Neon Green/Yellow
@@ -44,11 +44,11 @@ const containerVariants = {
 
 const islandVariants = {
   hidden: { opacity: 0, y: 50, scale: 0.8 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     y: 0,
-    scale: 1, 
-    transition: { type: "spring", stiffness: 80, damping: 15 } 
+    scale: 1,
+    transition: { type: "spring", stiffness: 80, damping: 15 }
   },
 };
 
@@ -82,7 +82,7 @@ const floatingBubble = (delay, duration) => ({
 export default function Skills() {
   return (
     <section className="py-24 px-4 sm:px-10 bg-[#0F172A] min-h-screen relative overflow-hidden" id="skills">
-      
+
       {/* Background Star/Dust Particles */}
       <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
 
@@ -117,7 +117,7 @@ export default function Skills() {
               whileHover={{ scale: 1.02 }}
               className="relative"
             >
-              <motion.div 
+              <motion.div
                 {...floatingIsland(index * 0.5)}
                 className={`h-full bg-[#1E293B]/80 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-[3rem] ${category.shadow} transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden group`}
               >
@@ -132,7 +132,7 @@ export default function Skills() {
                 <h3 className="text-2xl sm:text-3xl font-black text-white mb-8 tracking-wider z-10 drop-shadow-md">
                   {category.title}
                 </h3>
-                
+
                 {/* Skill Bubbles */}
                 <div className="flex flex-wrap justify-center gap-4 z-10 mt-auto">
                   {category.skills.map((skill, i) => (
