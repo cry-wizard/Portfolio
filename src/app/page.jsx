@@ -11,11 +11,14 @@ import {
 import Image from "next/image";
 import landingImg from "../../public/img5.jpg";
 import { Navigation } from "@/components/ui/Navigation";
-import About from "@/components/About";
-import Project from "@/components/Project";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import Skills from "@/components/Skills";
+import dynamic from 'next/dynamic';
+
+const About = dynamic(() => import('@/components/About'), { ssr: false, loading: () => <p className="text-center py-10 font-bold">Loading About...</p> });
+const Project = dynamic(() => import('@/components/Project'), { ssr: false, loading: () => <p className="text-center py-10 font-bold">Loading Projects...</p> });
+const Contact = dynamic(() => import('@/components/Contact'), { ssr: false, loading: () => <p className="text-center py-10 font-bold">Loading Contact...</p> });
+const Skills = dynamic(() => import('@/components/Skills'), { ssr: false, loading: () => <p className="text-center py-10 font-bold">Loading Skills...</p> });
+const Experience = dynamic(() => import('@/components/Experience'), { ssr: false, loading: () => <p className="text-center py-10 font-bold">Loading Experience...</p> });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
 
 // CometCard component (unchanged)
 export const CometCard = ({
@@ -93,7 +96,12 @@ const Page = () => {
     <main className="min-h-screen overflow-hidden bg-[#FFF7B3] text-black font-sans">
       <Navigation />
 
-      <section className="px-4 sm:px-6 py-14 max-w-7xl mx-auto">
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="px-4 sm:px-6 py-14 max-w-7xl mx-auto"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left Side */}
           <div className="space-y-6">
@@ -106,8 +114,8 @@ const Page = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-black leading-tight">
-              Hi, I&apos;m <span className="text-orange-500">Siddhart Raj</span>{" "}
+            <h1 className="text-4xl sm:text-6xl font-black leading-tight text-black">
+              Hi, I&apos;m <span className="text-orange-500">Siddharth Raj</span>{" "}
               —<span className="text-yellow-400"> Dev</span> &{" "}
               <span className="text-[#EA476D]">Creator</span>
             </h1>
@@ -118,14 +126,14 @@ const Page = () => {
 
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <button
-                onClick={() =>
-                  projectRef.current?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-[#FF5F5F] hover:bg-[#ff3f3f] text-white font-bold py-3 px-6 border-2 border-black rounded-lg shadow-md hover:-translate-y-1 transition-transform"
+              <a
+                href="https://github.com/cry-wizard"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#FF5F5F] hover:bg-[#ff3f3f] text-white font-bold py-3 px-6 border-2 border-black rounded-lg shadow-md hover:-translate-y-1 transition-transform inline-block"
               >
                 View Projects →
-              </button>
+              </a>
               <button
                 onClick={() =>
                   contactRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -190,11 +198,11 @@ const Page = () => {
                     />
                   </div>
                 </div>
-                <div className="flex justify-center gap-4">
-                  <div className="border-2 border-black bg-[#E5486D] px-4 py-2 font-bold text-xs rounded-md shadow">
+                <div className="flex justify-center gap-4 mt-2">
+                  <div className="border-2 border-black bg-[#E5486D] px-4 py-2 font-bold text-xs rounded-md shadow text-white">
                     HP 100
                   </div>
-                  <div className="border-2 border-black bg-[#1288AC] px-4 py-2 font-bold text-xs rounded-md shadow">
+                  <div className="border-2 border-black bg-[#1288AC] px-4 py-2 font-bold text-xs rounded-md shadow text-white">
                     XP 59%
                   </div>
                 </div>
@@ -202,24 +210,28 @@ const Page = () => {
             </CometCard>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Rest of the Sections */}
-      <div id="about">
+      <motion.div id="about" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <About />
-      </div>
+      </motion.div>
 
-      <div id="skills">
+      <motion.div id="experience" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+        <Experience />
+      </motion.div>
+
+      <motion.div id="skills" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <Skills />
-      </div>
+      </motion.div>
 
-      <div id="projects" ref={projectRef}>
+      <motion.div id="projects" ref={projectRef} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <Project />
-      </div>
+      </motion.div>
 
-      <div id="contact" ref={contactRef}>
+      <motion.div id="contact" ref={contactRef} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <Contact />
-      </div>
+      </motion.div>
 
       <Footer />
     </main>

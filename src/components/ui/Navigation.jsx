@@ -3,7 +3,7 @@
 import React from "react";
 
 export function Navigation() {
-  const scrollToSection = ( string) => {
+  const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -27,7 +27,7 @@ export function Navigation() {
 
         {/* Navigation Items */}
         <div className="hidden md:flex items-center gap-4 lg:gap-8">
-          {["Home", "About", "Skills", "Projects","Contact"].map((item) => (
+          {["Home", "About", "Experience", "Skills", "Projects", "Contact"].map((item) => (
             <button
               key={item}
               onClick={() => scrollToSection(item.toLowerCase())}

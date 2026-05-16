@@ -100,10 +100,18 @@ const AnimatedStatBox = ({
 // ==========================
 const Contact = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Form submitted!");
+    if (!name || !email || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:sidd160306@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -148,6 +156,9 @@ const Contact = () => {
                     type="email"
                     placeholder="Email"
                     className="w-full bg-[#fff6b3] border-2 border-black p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
 
@@ -156,6 +167,9 @@ const Contact = () => {
                   <textarea
                     className="w-full bg-[#fff6b3] border-2 border-black p-2 h-40 resize-none focus:outline-none focus:ring-2 focus:ring-orange-400"
                     placeholder="Write your message..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
                   ></textarea>
                 </div>
 
@@ -175,12 +189,17 @@ const Contact = () => {
                 </div>
 
                 <div className="flex justify-end gap-3 mt-[-40px] mr-1">
-                  <button className="border-2 border-black bg-white px-3 py-1 font-semibold text-sm shadow-[2px_2px_0_0_#000] hover:bg-gray-100">
+                  <a
+                    href="https://www.linkedin.com/in/siddharth-1603-david/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-2 border-black bg-white px-3 py-1 font-semibold text-sm shadow-[2px_2px_0_0_#000] hover:bg-gray-100 block"
+                  >
+                    LinkedIn
+                  </a>
+                  <a href="mailto:sidd160306@gmail.com" className="border-2 border-black bg-white px-3 py-1 font-semibold text-sm shadow-[2px_2px_0_0_#000] hover:bg-gray-100 block">
                     Email
-                  </button>
-                  <button className="border-2 border-black bg-white px-3 py-1 font-semibold text-sm shadow-[2px_2px_0_0_#000] hover:bg-gray-100">
-                    Discord
-                  </button>
+                  </a>
                 </div>
               </form>
             </div>
@@ -211,12 +230,21 @@ const Contact = () => {
                   about coding, learning new technologies, and building meaningful projects.
                 </p>
                 <div className="flex gap-2">
-                  <button className="flex-1 border-2 border-black bg-[#fff6b3] font-bold py-2 text-sm shadow-[2px_2px_0_0_#000] hover:bg-yellow-200 transition">
+                  <a
+                    href="https://github.com/cry-wizard"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 border-2 border-black bg-[#fff6b3] font-bold py-2 text-sm shadow-[2px_2px_0_0_#000] hover:bg-yellow-200 transition text-center block"
+                  >
                     Projects
-                  </button>
-                  <button className="flex-1 border-2 border-black bg-[#fff6b3] font-bold py-2 text-sm shadow-[2px_2px_0_0_#000] hover:bg-yellow-200 transition">
+                  </a>
+                  <a
+                    href="/CV/FS_Siddharth_Raj.pdf"
+                    download="FS_Siddharth_Raj.pdf"
+                    className="flex-1 border-2 border-black bg-[#fff6b3] font-bold py-2 text-sm shadow-[2px_2px_0_0_#000] hover:bg-yellow-200 transition text-center block"
+                  >
                     Resume
-                  </button>
+                  </a>
                 </div>
               </div>
             </FadeInOnScroll>

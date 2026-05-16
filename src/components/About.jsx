@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import robotImg from "../../public/img12.png";
+import robotImg from "../../public/img7.png";
 
 const About = () => {
   return (
